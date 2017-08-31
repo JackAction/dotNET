@@ -20,12 +20,24 @@ namespace Beispiel1.Controllers
 
         public ActionResult Index()
         {
-            return Content("yuhuuu");
+            //return Content("yuhuuu");
+
+            ViewBag.Tiiiitel = "hey title string";
+            ViewBag.he = "asdf";
+            
+            return View();
         }
 
         public ActionResult Message()
         {
             return Content("<script>alert('Welcome To All');</script>");
         }
+
+
+        public ActionResult MachSpoiler()
+        {
+            return View("CreateHeckspoiler");
+        }
+
     }
 }
