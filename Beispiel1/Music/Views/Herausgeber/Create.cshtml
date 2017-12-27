@@ -1,0 +1,14 @@
+﻿@model Music.Models.Herausgeber
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm("Create2", "Herausgeber", FormMethod.Post))
+{
+    @*<input type="text" name="Name" value="" />*@
+    @Html.TextBox("Name");
+    <input type="submit" value="Save" />
+}

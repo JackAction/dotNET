@@ -1,0 +1,51 @@
+﻿
+@{
+    Layout = "~/Views/Lastwagen/LastwagenLayout.cshtml";
+}
+
+@*<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Stoppage</title>
+</head>
+<body>
+    <div>
+        <h1>@ViewBag.Tiiiitel</h1>
+        <p>@ViewBag.Teeext</p>
+        @if (ViewBag.Sekunden <= 10)
+        {
+            <p>Notbremse in @ViewBag.Sekunden Sekunden</p>
+        }
+        else
+        {
+            <p>Anhalten in @ViewBag.Sekunden Sekunden</p>
+        }
+    </div>
+</body>
+</html>*@
+
+<p>Mainshit:</p>
+@if (ViewBag.Sekunden <= 10)
+{
+    <p>Notbremse in @ViewBag.Sekunden Sekunden</p>
+}
+else
+{
+    <p>Anhalten in @ViewBag.Sekunden Sekunden</p>
+}
+
+
+
+
+@section Header {
+    <h1>Header: @ViewBag.Tiiiitel</h1>
+}
+
+
+
+
+@section Footer {
+    <p>Footer: </p>
+}
