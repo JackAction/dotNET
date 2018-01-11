@@ -15,6 +15,8 @@ namespace Spielzeuge
             createRolesandUsers();
         }
 
+
+        // https://code.msdn.microsoft.com/ASPNET-MVC-5-Security-And-44cbdb97#content
         // In this method we will create default User roles and Admin user for login   
         private void createRolesandUsers()
         {

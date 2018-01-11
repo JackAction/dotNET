@@ -17,6 +17,15 @@
         <th>
             @Html.DisplayNameFor(model => model.Preis)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Details)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Aktiv)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Ausgeliehen)
+        </th>
         <th></th>
     </tr>
 
@@ -27,6 +36,15 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Preis)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Details)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Aktiv)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Ausgeliehen)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.SpielzeugId }) |

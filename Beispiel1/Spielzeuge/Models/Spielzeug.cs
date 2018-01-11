@@ -12,5 +12,8 @@ namespace Spielzeuge.Models
         [DisplayName("Spielzeug")]
         public string Name { get; set; }
         public double Preis { get; set; }
+        public string Details { get; set; }
+        public bool Aktiv { get; set; }
+        public bool Ausgeliehen { get; set; }
     }
 }

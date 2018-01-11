@@ -50,7 +50,7 @@ namespace Spielzeuge.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public ActionResult Create([Bind(Include = "SpielzeugId,Name,Preis")] Spielzeug spielzeug)
+        public ActionResult Create([Bind(Include = "SpielzeugId,Name,Preis,Details,Aktiv,Ausgeliehen")] Spielzeug spielzeug)
         {
             if (ModelState.IsValid)
             {
@@ -84,7 +84,7 @@ namespace Spielzeuge.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public ActionResult Edit([Bind(Include = "SpielzeugId,Name,Preis")] Spielzeug spielzeug)
+        public ActionResult Edit([Bind(Include = "SpielzeugId,Name,Preis,Details,Aktiv,Ausgeliehen")] Spielzeug spielzeug)
         {
             if (ModelState.IsValid)
             {
