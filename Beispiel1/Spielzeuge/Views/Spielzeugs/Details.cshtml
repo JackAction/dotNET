@@ -44,6 +44,28 @@
 
     </dl>
 </div>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.SpielzeugId)
+        @Html.HiddenFor(model => model.Name)
+
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Reservieren" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+
+
 <p>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to List", "Index") 
 </p>
