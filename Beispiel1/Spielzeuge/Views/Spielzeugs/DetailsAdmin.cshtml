@@ -1,10 +1,10 @@
 ﻿@model Spielzeuge.Models.Spielzeug
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Details Admin";
 }
 
-<h2>Details</h2>
+<h2>Details Admin</h2>
 
 <div>
     <h4>Spielzeug</h4>
@@ -35,6 +35,14 @@
         </dd>
 
         <dt>
+            @Html.DisplayNameFor(model => model.Aktiv)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Aktiv)
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.Ausgeliehen)
         </dt>
 
@@ -45,5 +53,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Edit", "Edit", new { id = Model.SpielzeugId }) |
+    @Html.ActionLink("Back to List", "IndexAdmin")
 </p>

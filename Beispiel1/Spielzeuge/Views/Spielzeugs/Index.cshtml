@@ -7,7 +7,7 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Admin View", "IndexAdmin")
 </p>
 <table class="table">
     <tr>
@@ -19,9 +19,6 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Details)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Aktiv)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Ausgeliehen)
@@ -41,15 +38,10 @@
             @Html.DisplayFor(modelItem => item.Details)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Aktiv)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.Ausgeliehen)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.SpielzeugId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.SpielzeugId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.SpielzeugId })
+            @Html.ActionLink("Details", "Details", new { id=item.SpielzeugId })
         </td>
     </tr>
 }

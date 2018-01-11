@@ -273,6 +273,8 @@
     <Content Include="Views\Spielzeugs\Details.cshtml" />
     <Content Include="Views\Spielzeugs\Edit.cshtml" />
     <Content Include="Views\Spielzeugs\Index.cshtml" />
+    <Content Include="Views\Spielzeugs\IndexAdmin.cshtml" />
+    <Content Include="Views\Spielzeugs\DetailsAdmin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

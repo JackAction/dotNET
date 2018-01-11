@@ -18,12 +18,35 @@ namespace Spielzeuge.Controllers
         [AllowAnonymous]
         public ActionResult Index()
         {
+            return View(db.Spielzeugs.Where(s => s.Aktiv == true).ToList());
+        }
+
+        // GET: Spielzeugs
+        [Authorize(Roles = "Admin")]
+        public ActionResult IndexAdmin()
+        {
             return View(db.Spielzeugs.ToList());
         }
 
         // GET: Spielzeugs/Details/5
         [AllowAnonymous]
         public ActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Spielzeug spielzeug = db.Spielzeugs.Find(id);
+            if (spielzeug == null)
+            {
+                return HttpNotFound();
+            }
+            return View(spielzeug);
+        }
+
+        // GET: Spielzeugs/Details/5
+        [Authorize(Roles = "Admin")]
+        public ActionResult DetailsAdmin(int? id)
         {
             if (id == null)
             {
@@ -56,7 +79,7 @@ namespace Spielzeuge.Controllers
             {
                 db.Spielzeugs.Add(spielzeug);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("IndexAdmin");
             }
 
             return View(spielzeug);
@@ -90,7 +113,7 @@ namespace Spielzeuge.Controllers
             {
                 db.Entry(spielzeug).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("IndexAdmin");
             }
             return View(spielzeug);
         }
@@ -120,7 +143,7 @@ namespace Spielzeuge.Controllers
             Spielzeug spielzeug = db.Spielzeugs.Find(id);
             db.Spielzeugs.Remove(spielzeug);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("IndexAdmin");
         }
 
         protected override void Dispose(bool disposing)
