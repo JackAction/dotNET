@@ -53,6 +53,11 @@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.SpielzeugId)
         @Html.HiddenFor(model => model.Name)
+        @Html.HiddenFor(model => model.Preis)
+        @Html.HiddenFor(model => model.Details)
+        @Html.HiddenFor(model => model.Ausgeliehen)
+        @Html.HiddenFor(model => model.Aktiv)
+        @Html.HiddenFor(model => model.Reservierungen)
 
         <div class="form-group">
             <label class = "control-label col-md-2">Datum Von:</label>
@@ -70,7 +75,30 @@
 }
 
 
-
 <p>
     @Html.ActionLink("Back to List", "Index") 
 </p>
+
+<h3>Alle Reservierungen</h3>
+<table class="table">
+    <tr>
+        <th>
+            ReservierungsId
+        </th>
+        <th>
+            SpielzeugId
+        </th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model.Reservierungen)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReservierungId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SpielzeugId)
+            </td>
+        </tr>
+    }
+</table>

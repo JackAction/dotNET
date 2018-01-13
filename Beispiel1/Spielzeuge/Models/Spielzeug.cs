@@ -13,8 +13,8 @@ namespace Spielzeuge.Models
         public string Name { get; set; }
         public double Preis { get; set; }
         public string Details { get; set; }
-        public bool Aktiv { get; set; }
-        public bool Ausgeliehen { get; set; }
+        public bool Aktiv { get; set; } // Anstelle von löschen -> aktiv/inaktiv (nur Admin)
+        public bool Ausgeliehen { get; set; } // 1 = Spielzeug abgeholt, 0 = Spielzueg noch nicht abgeholt oder zurückgebracht (nur Admin)
 
         public List<Reservierung> Reservierungen { get; set; }
     }

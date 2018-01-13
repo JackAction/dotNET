@@ -31,5 +31,6 @@ namespace Spielzeuge.Models
         }
 
         public System.Data.Entity.DbSet<Spielzeuge.Models.Spielzeug> Spielzeugs { get; set; }
+        public System.Data.Entity.DbSet<Spielzeuge.Models.Reservierung> Reservierungs { get; set; }
     }
 }

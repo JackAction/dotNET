@@ -36,7 +36,7 @@ namespace Spielzeuge.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Spielzeug spielzeug = db.Spielzeugs.Find(id);
+            Spielzeug spielzeug = db.Spielzeugs.Include(r => r.Reservierungen).SingleOrDefault(c => c.SpielzeugId == id);
             if (spielzeug == null)
             {
                 return HttpNotFound();
@@ -49,12 +49,19 @@ namespace Spielzeuge.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Details([Bind(Include = "SpielzeugId,Name,Preis,Details,Aktiv,Ausgeliehen")] Spielzeug spielzeug, DateTime datumVon)
+        public ActionResult Details([Bind(Include = "SpielzeugId,Name,Preis,Details,Aktiv,Ausgeliehen,Reservierungen")] Spielzeug spielzeug, String datumVon)
         {
             if (ModelState.IsValid)
             {
-                //db.Entry(spielzeug).State = EntityState.Modified;
-                //db.SaveChanges();
+                Reservierung reservierung = new Reservierung() { SpielzeugId = spielzeug.SpielzeugId, Spielzeug = spielzeug};
+                db.Reservierungs.Add(reservierung);
+                if (spielzeug.Reservierungen == null)
+                {
+                    spielzeug.Reservierungen = new List<Reservierung>();
+                }
+                spielzeug.Reservierungen.Add(reservierung);
+                db.Entry(spielzeug).State = EntityState.Modified;
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(spielzeug);
