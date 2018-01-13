@@ -15,5 +15,7 @@ namespace Spielzeuge.Models
         public string Details { get; set; }
         public bool Aktiv { get; set; }
         public bool Ausgeliehen { get; set; }
+
+        public List<Reservierung> Reservierungen { get; set; }
     }
 }

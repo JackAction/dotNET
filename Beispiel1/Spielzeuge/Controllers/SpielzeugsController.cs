@@ -18,14 +18,14 @@ namespace Spielzeuge.Controllers
         [AllowAnonymous]
         public ActionResult Index()
         {
-            return View(db.Spielzeugs.Where(s => s.Aktiv == true).ToList());
+            return View(db.Spielzeugs.Where(s => s.Aktiv == true).Include(r => r.Reservierungen).ToList());
         }
 
         // GET: Spielzeugs
         [Authorize(Roles = "Admin")]
         public ActionResult IndexAdmin()
         {
-            return View(db.Spielzeugs.ToList());
+            return View(db.Spielzeugs.Include(r => r.Reservierungen).ToList());
         }
 
         // GET: Spielzeugs/Details/5
@@ -49,7 +49,7 @@ namespace Spielzeuge.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Details([Bind(Include = "SpielzeugId,Name,Preis,Details,Aktiv,Ausgeliehen")] Spielzeug spielzeug)
+        public ActionResult Details([Bind(Include = "SpielzeugId,Name,Preis,Details,Aktiv,Ausgeliehen")] Spielzeug spielzeug, DateTime datumVon)
         {
             if (ModelState.IsValid)
             {
