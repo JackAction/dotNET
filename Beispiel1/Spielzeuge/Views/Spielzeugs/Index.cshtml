@@ -74,9 +74,19 @@
             @Html.DisplayFor(modelItem => item.Ausgeliehen)
         </td>
         <td>
-            @Html.ActionLink("Details", "Details", new { id=item.SpielzeugId })
+            @Html.ActionLink("Details", "Details", new { id=item.SpielzeugId }, new { @class = "myLink" })
         </td>
     </tr>
 }
 
 </table>
+
+<script>
+  $(function() {
+    $('.myLink').click(function() {
+        var datumVon = $('#datumVon').val();
+        var datumBis = $('#datumBis').val();
+        this.href = this.href + '?datumVon=' + encodeURIComponent(datumVon) + '&datumBis=' + encodeURIComponent(datumBis);
+    });
+});
+</script>

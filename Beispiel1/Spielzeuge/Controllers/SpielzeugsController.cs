@@ -44,7 +44,7 @@ namespace Spielzeuge.Controllers
 
         // GET: Spielzeugs/Details/5
         [AllowAnonymous]
-        public ActionResult Details(int? id)
+        public ActionResult Details(int? id, string datumVon, string datumBis)
         {
             if (id == null)
             {
