@@ -13,5 +13,8 @@ namespace Spielzeuge.Models
 
         public Spielzeug Spielzeug { get; set; }
 
+        public DateTime DatumVon { get; set; }
+
+        public DateTime DatumBis { get; set; }
     }
 }

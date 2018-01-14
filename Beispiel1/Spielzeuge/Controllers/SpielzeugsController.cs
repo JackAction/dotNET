@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Spielzeuge.Models;
+using System.Globalization;
 
 namespace Spielzeuge.Controllers
 {
@@ -49,11 +50,15 @@ namespace Spielzeuge.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Details([Bind(Include = "SpielzeugId,Name,Preis,Details,Aktiv,Ausgeliehen,Reservierungen")] Spielzeug spielzeug, String datumVon)
+        public ActionResult Details([Bind(Include = "SpielzeugId,Name,Preis,Details,Aktiv,Ausgeliehen")] Spielzeug spielzeug, string datumVon, string datumBis)
         {
             if (ModelState.IsValid)
             {
-                Reservierung reservierung = new Reservierung() { SpielzeugId = spielzeug.SpielzeugId, Spielzeug = spielzeug};
+                Reservierung reservierung = new Reservierung() { SpielzeugId = spielzeug.SpielzeugId,
+                                                                 Spielzeug = spielzeug,
+                                                                 DatumVon = DateTime.ParseExact(datumVon, "MM/dd/yyyy", CultureInfo.CurrentCulture),
+                                                                 DatumBis = DateTime.ParseExact(datumBis, "MM/dd/yyyy", CultureInfo.CurrentCulture)
+                };
                 db.Reservierungs.Add(reservierung);
                 if (spielzeug.Reservierungen == null)
                 {
