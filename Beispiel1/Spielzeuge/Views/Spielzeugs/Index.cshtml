@@ -9,6 +9,39 @@
 <p>
     @Html.ActionLink("Admin View", "IndexAdmin")
 </p>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Datum Von:</label>
+            <div class="col-md-10">
+                @Html.TextBox("datumVon", "", new { @class = "date-picker" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Datum Bis:</label>
+            <div class="col-md-10">
+                @Html.TextBox("datumBis", "", new { @class = "date-picker" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Filtern" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+
+
 <table class="table">
     <tr>
         <th>

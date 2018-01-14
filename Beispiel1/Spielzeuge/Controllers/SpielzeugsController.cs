@@ -22,6 +22,19 @@ namespace Spielzeuge.Controllers
             return View(db.Spielzeugs.Where(s => s.Aktiv == true).Include(r => r.Reservierungen).ToList());
         }
 
+        // POST: Spielzeugs/Index/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Index(string datumVon, string datumBis)
+        {
+            DateTime DatumVon = DateTime.ParseExact(datumVon, "MM/dd/yyyy", CultureInfo.CurrentCulture);
+            DateTime DatumBis = DateTime.ParseExact(datumBis, "MM/dd/yyyy", CultureInfo.CurrentCulture);
+
+            return View(db.Spielzeugs.Where(s => s.Aktiv == true).Include(r => r.Reservierungen).Where(z => !z.Reservierungen.Any(b => b.DatumVon <= DatumBis && b.DatumBis >= DatumVon)).ToList());
+        }
+
         // GET: Spielzeugs
         [Authorize(Roles = "Admin")]
         public ActionResult IndexAdmin()
