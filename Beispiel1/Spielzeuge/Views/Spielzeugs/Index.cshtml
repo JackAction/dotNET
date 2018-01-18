@@ -76,6 +76,31 @@
         <td>
             @Html.ActionLink("Details", "Details", new { id=item.SpielzeugId }, new { @class = "myLink" })
         </td>
+        <td>
+            @using (Html.BeginForm("Reserve", "Spielzeugs", FormMethod.Post, new { name = "myForm" }))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-horizontal">
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.Hidden("SpielzeugId", item.SpielzeugId)
+                    @Html.Hidden("Name", item.Name)
+                    @Html.Hidden("Preis", item.Preis)
+                    @Html.Hidden("Details", item.Details)
+                    @Html.Hidden("Ausgeliehen", item.Ausgeliehen)
+                    @Html.Hidden("Aktiv", item.Aktiv)
+
+
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Reservieren" class="btn btn-default mySend" />
+                    </div>
+                </div>
+            </div>
+            }
+        </td>
     </tr>
 }
 
@@ -88,5 +113,14 @@
         var datumBis = $('#datumBis').val();
         this.href = this.href + '?datumVon=' + encodeURIComponent(datumVon) + '&datumBis=' + encodeURIComponent(datumBis);
     });
-});
+  });
+
+
+  $(function () {
+      $("[name='myForm']").submit(function () {
+          $(this).append($("[name='datumVon']"));
+          $(this).append($("[name='datumBis']"));
+          return true;
+      });
+  });
 </script>

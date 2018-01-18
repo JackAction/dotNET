@@ -63,7 +63,7 @@ namespace Spielzeuge.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Details([Bind(Include = "SpielzeugId,Name,Preis,Details,Aktiv,Ausgeliehen")] Spielzeug spielzeug, string datumVon, string datumBis)
+        public ActionResult Reserve([Bind(Include = "SpielzeugId,Name,Preis,Details,Aktiv,Ausgeliehen")] Spielzeug spielzeug, string datumVon, string datumBis)
         {
             if (ModelState.IsValid)
             {
