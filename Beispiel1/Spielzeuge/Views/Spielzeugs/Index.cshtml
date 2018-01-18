@@ -6,6 +6,8 @@
 
 <h2>Index</h2>
 
+<h3>@ViewBag.ErrorMsg</h3>
+
 <p>
     @Html.ActionLink("Admin View", "IndexAdmin")
 </p>
@@ -77,7 +79,7 @@
             @Html.ActionLink("Details", "Details", new { id=item.SpielzeugId }, new { @class = "myLink" })
         </td>
         <td>
-            @using (Html.BeginForm("Reserve", "Spielzeugs", FormMethod.Post, new { name = "myForm" }))
+            @using (Html.BeginForm("ReserveIndex", "Spielzeugs", FormMethod.Post, new { name = "myForm" }))
             {
                 @Html.AntiForgeryToken()
 

@@ -19,6 +19,10 @@ namespace Spielzeuge.Controllers
         [AllowAnonymous]
         public ActionResult Index()
         {
+            if (TempData["error"] != null)
+            {
+                ViewBag.ErrorMsg = TempData["error"].ToString();
+            }
             return View(db.Spielzeugs.Where(s => s.Aktiv == true).Include(r => r.Reservierungen).ToList());
         }
 
@@ -29,6 +33,10 @@ namespace Spielzeuge.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Index(string datumVon, string datumBis)
         {
+            if (datumVon == "" || datumBis == "")
+            {
+                return RedirectToAction("Index");
+            }
             DateTime DatumVon = DateTime.ParseExact(datumVon, "MM/dd/yyyy", CultureInfo.CurrentCulture);
             DateTime DatumBis = DateTime.ParseExact(datumBis, "MM/dd/yyyy", CultureInfo.CurrentCulture);
 
@@ -63,26 +71,59 @@ namespace Spielzeuge.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Reserve([Bind(Include = "SpielzeugId,Name,Preis,Details,Aktiv,Ausgeliehen")] Spielzeug spielzeug, string datumVon, string datumBis)
+        public ActionResult ReserveIndex([Bind(Include = "SpielzeugId,Name,Preis,Details,Aktiv,Ausgeliehen")] Spielzeug spielzeug, string datumVon, string datumBis)
         {
+            DateTime DatumVon = DateTime.ParseExact(datumVon, "MM/dd/yyyy", CultureInfo.CurrentCulture);
+            DateTime DatumBis = DateTime.ParseExact(datumBis, "MM/dd/yyyy", CultureInfo.CurrentCulture);
+
+            if (DatumVon > DatumBis)
+            {
+                TempData["error"] = "1. Datum muss vor 2. Datum sein.";
+                return RedirectToAction("Index", new { datumVon = datumVon, datumBis = datumBis });
+            }
             if (ModelState.IsValid)
             {
-                Reservierung reservierung = new Reservierung() { SpielzeugId = spielzeug.SpielzeugId,
-                                                                 Spielzeug = spielzeug,
-                                                                 DatumVon = DateTime.ParseExact(datumVon, "MM/dd/yyyy", CultureInfo.CurrentCulture),
-                                                                 DatumBis = DateTime.ParseExact(datumBis, "MM/dd/yyyy", CultureInfo.CurrentCulture)
-                };
-                db.Reservierungs.Add(reservierung);
-                if (spielzeug.Reservierungen == null)
-                {
-                    spielzeug.Reservierungen = new List<Reservierung>();
-                }
-                spielzeug.Reservierungen.Add(reservierung);
-                db.Entry(spielzeug).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                ReserveOnDB(spielzeug, DatumVon, DatumBis);
+                return RedirectToAction("Index", new { datumVon = datumVon, datumBis = datumBis });
             }
-            return View(spielzeug);
+            return RedirectToAction("Index", new { datumVon = datumVon, datumBis = datumBis });
+        }
+
+        // POST: Spielzeugs/Details/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ReserveDetail([Bind(Include = "SpielzeugId,Name,Preis,Details,Aktiv,Ausgeliehen")] Spielzeug spielzeug, string datumVon, string datumBis)
+        {
+            DateTime DatumVon = DateTime.ParseExact(datumVon, "MM/dd/yyyy", CultureInfo.CurrentCulture);
+            DateTime DatumBis = DateTime.ParseExact(datumBis, "MM/dd/yyyy", CultureInfo.CurrentCulture);
+
+            if (ModelState.IsValid)
+            {
+                ReserveOnDB(spielzeug, DatumVon, DatumBis);
+                return RedirectToAction("Details", new { id = spielzeug.SpielzeugId, datumVon = datumVon, datumBis = datumBis });
+            }
+            return RedirectToAction("Details", new { id = spielzeug.SpielzeugId, datumVon = datumVon, datumBis = datumBis });
+        }
+
+        private void ReserveOnDB(Spielzeug spielzeug, DateTime datumVon, DateTime datumBis)
+        {
+            Reservierung reservierung = new Reservierung()
+            {
+                SpielzeugId = spielzeug.SpielzeugId,
+                Spielzeug = spielzeug,
+                DatumVon = datumVon,
+                DatumBis = datumBis
+            };
+            db.Reservierungs.Add(reservierung);
+            if (spielzeug.Reservierungen == null)
+            {
+                spielzeug.Reservierungen = new List<Reservierung>();
+            }
+            spielzeug.Reservierungen.Add(reservierung);
+            db.Entry(spielzeug).State = EntityState.Modified;
+            db.SaveChanges();
         }
 
 
