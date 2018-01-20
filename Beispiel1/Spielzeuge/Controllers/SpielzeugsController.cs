@@ -27,6 +27,7 @@ namespace Spielzeuge.Controllers
         }
 
         // POST: Spielzeugs/Index/5
+        // Filtern
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -39,7 +40,11 @@ namespace Spielzeuge.Controllers
             }
             DateTime DatumVon = DateTime.ParseExact(datumVon, "MM/dd/yyyy", CultureInfo.CurrentCulture);
             DateTime DatumBis = DateTime.ParseExact(datumBis, "MM/dd/yyyy", CultureInfo.CurrentCulture);
-
+            if (DatumVon > DatumBis)
+            {
+                ViewBag.ErrorMsg = "1. Datum muss vor 2. Datum sein.";
+                return View(db.Spielzeugs.Where(s => s.Aktiv == true).Include(r => r.Reservierungen).ToList());
+            }
             return View(db.Spielzeugs.Where(s => s.Aktiv == true).Include(r => r.Reservierungen).Where(z => !z.Reservierungen.Any(b => b.DatumVon <= DatumBis && b.DatumBis >= DatumVon)).ToList());
         }
 
@@ -54,6 +59,10 @@ namespace Spielzeuge.Controllers
         [AllowAnonymous]
         public ActionResult Details(int? id, string datumVon, string datumBis)
         {
+            if (TempData["error"] != null)
+            {
+                ViewBag.ErrorMsg = TempData["error"].ToString();
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -76,9 +85,10 @@ namespace Spielzeuge.Controllers
             DateTime DatumVon = DateTime.ParseExact(datumVon, "MM/dd/yyyy", CultureInfo.CurrentCulture);
             DateTime DatumBis = DateTime.ParseExact(datumBis, "MM/dd/yyyy", CultureInfo.CurrentCulture);
 
-            if (DatumVon > DatumBis)
+            string errorMsg = Validation(spielzeug, DatumVon, DatumBis);
+            if ( errorMsg != "")
             {
-                TempData["error"] = "1. Datum muss vor 2. Datum sein.";
+                TempData["error"] = errorMsg;
                 return RedirectToAction("Index", new { datumVon = datumVon, datumBis = datumBis });
             }
             if (ModelState.IsValid)
@@ -99,12 +109,32 @@ namespace Spielzeuge.Controllers
             DateTime DatumVon = DateTime.ParseExact(datumVon, "MM/dd/yyyy", CultureInfo.CurrentCulture);
             DateTime DatumBis = DateTime.ParseExact(datumBis, "MM/dd/yyyy", CultureInfo.CurrentCulture);
 
+            string errorMsg = Validation(spielzeug, DatumVon, DatumBis);
+            if (errorMsg != "")
+            {
+                TempData["error"] = errorMsg;
+                return RedirectToAction("Details", new { id = spielzeug.SpielzeugId, datumVon = datumVon, datumBis = datumBis });
+            }
             if (ModelState.IsValid)
             {
                 ReserveOnDB(spielzeug, DatumVon, DatumBis);
                 return RedirectToAction("Details", new { id = spielzeug.SpielzeugId, datumVon = datumVon, datumBis = datumBis });
             }
             return RedirectToAction("Details", new { id = spielzeug.SpielzeugId, datumVon = datumVon, datumBis = datumBis });
+        }
+
+        private string Validation(Spielzeug spielzeug, DateTime datumVon, DateTime datumBis)
+        {
+            if (datumVon > datumBis)
+            {
+                return "1. Datum muss vor 2. Datum sein.";
+            }
+
+            if (db.Spielzeugs.Include(r => r.Reservierungen).Any(z => z.SpielzeugId == spielzeug.SpielzeugId & z.Reservierungen.Any(b => b.DatumVon <= datumBis && b.DatumBis >= datumVon)))
+            {
+                return "Spielzeug bereits ausgeliehen in diesem Zeitraum.";
+            }
+            return "";
         }
 
         private void ReserveOnDB(Spielzeug spielzeug, DateTime datumVon, DateTime datumBis)
