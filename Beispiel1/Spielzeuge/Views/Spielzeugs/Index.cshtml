@@ -35,6 +35,13 @@
         </div>
 
         <div class="form-group">
+            <label class="control-label col-md-2">Nach Begriff filtern:</label>
+            <div class="col-md-10">
+                @Html.TextBox("search")
+            </div>
+        </div>
+
+        <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Filtern" class="btn btn-default" />
             </div>
@@ -42,10 +49,11 @@
     </div>
 }
 
-
-
 <table class="table">
     <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Bilder)
+        </th>
         <th>
             @Html.DisplayNameFor(model => model.Name)
         </th>
@@ -55,14 +63,17 @@
         <th>
             @Html.DisplayNameFor(model => model.Details)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Ausgeliehen)
-        </th>
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
+        <td>
+            @if (item.Bilder != null && item.Bilder.Count > 0)
+            {
+                <img src='@Url.Action("Show", "Bilds", new { id = item.Bilder.FirstOrDefault().BildId })' style='max-height:100px; max-width:100px;' />
+            }
+        </td>
         <td>
             @Html.DisplayFor(modelItem => item.Name)
         </td>
@@ -73,10 +84,7 @@
             @Html.DisplayFor(modelItem => item.Details)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Ausgeliehen)
-        </td>
-        <td>
-            @Html.ActionLink("Details", "Details", new { id=item.SpielzeugId }, new { @class = "myLink" })
+		    @Html.ActionLink("Details", "Details", new { id = item.SpielzeugId }, new { @class = "myLink" }) 
         </td>
         <td>
             @using (Html.BeginForm("ReserveIndex", "Spielzeugs", FormMethod.Post, new { name = "myForm" }))

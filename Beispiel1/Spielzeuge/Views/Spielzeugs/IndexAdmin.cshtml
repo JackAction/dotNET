@@ -6,11 +6,16 @@
 
 <h2>Index Admin</h2>
 
+<h3>@ViewBag.ErrorMsg</h3>
+
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
 <table class="table">
     <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Bilder)
+        </th>
         <th>
             @Html.DisplayNameFor(model => model.Name)
         </th>
@@ -32,6 +37,12 @@
     @foreach (var item in Model)
     {
         <tr>
+            <td>
+                @if (item.Bilder != null && item.Bilder.Count > 0)
+                {
+                    <img src='@Url.Action("Show", "Bilds", new { id = item.Bilder.FirstOrDefault().BildId })' style='max-height:100px; max-width:100px;' />
+                }
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>

@@ -37,15 +37,19 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Ausgeliehen)
+            @Html.DisplayNameFor(model => model.Bilder)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Ausgeliehen)
+            @foreach (var item in Model.Bilder)
+            {
+                <img src='@Url.Action("Show", "Bilds", new { id = item.BildId })' style='max-height:200px; max-width:200px;'/>
+            }
         </dd>
 
     </dl>
 </div>
+
 @using (Html.BeginForm("ReserveDetail", "Spielzeugs"))
 {
     @Html.AntiForgeryToken()

@@ -49,6 +49,16 @@
         <dd>
             @Html.DisplayFor(model => model.Ausgeliehen)
         </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Bilder)
+        </dt>
+
+        <dd>
+            @foreach (var item in Model.Bilder)
+            {
+                <img src='@Url.Action("Show", "Bilds", new { id = item.BildId })' style='max-height:200px; max-width:200px;' />
+            }
+        </dd>
 
     </dl>
 </div>
@@ -56,3 +66,39 @@
     @Html.ActionLink("Edit", "Edit", new { id = Model.SpielzeugId }) |
     @Html.ActionLink("Back to List", "IndexAdmin")
 </p>
+
+<h3>Alle Reservierungen</h3>
+<table class="table">
+    <tr>
+        <th>
+            ReservierungsId
+        </th>
+        <th>
+            SpielzeugId
+        </th>
+        <th>
+            Datum Von
+        </th>
+        <th>
+            Datum Bis
+        </th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model.Reservierungen)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReservierungId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SpielzeugId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DatumVon)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DatumBis)
+            </td>
+        </tr>
+    }
+</table>

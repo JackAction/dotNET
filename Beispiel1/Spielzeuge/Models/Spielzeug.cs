@@ -17,5 +17,7 @@ namespace Spielzeuge.Models
         public bool Ausgeliehen { get; set; } // 1 = Spielzeug abgeholt, 0 = Spielzueg noch nicht abgeholt oder zurückgebracht (nur Admin)
 
         public List<Reservierung> Reservierungen { get; set; }
+
+        public List<Bild> Bilder { get; set; }
     }
 }

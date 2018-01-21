@@ -77,6 +77,10 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="NinjaNye.SearchExtensions, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NinjaNye.SearchExtensions.2.2.0\lib\net45\NinjaNye.SearchExtensions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -196,6 +200,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BildsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\SpielzeugsController.cs" />
@@ -204,6 +209,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Bild.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Reservierung.cs" />
@@ -321,6 +327,11 @@
     <Content Include="Views\Spielzeugs\Index.cshtml" />
     <Content Include="Views\Spielzeugs\IndexAdmin.cshtml" />
     <Content Include="Views\Spielzeugs\DetailsAdmin.cshtml" />
+    <Content Include="Views\Bilds\Create.cshtml" />
+    <Content Include="Views\Bilds\Delete.cshtml" />
+    <Content Include="Views\Bilds\Details.cshtml" />
+    <Content Include="Views\Bilds\Edit.cshtml" />
+    <Content Include="Views\Bilds\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
