@@ -38,6 +38,8 @@ namespace Spielzeuge.Controllers
         {
             if (datumVon == "" || datumBis == "")
             {
+                // NuGet Package für Suche:
+                // http://ninjanye.github.io/SearchExtensions/stringsearch.html
                 return View(db.Spielzeugs.Where(s => s.Aktiv == true).Include(r => r.Reservierungen).Include(r => r.Bilder).Search(x => x.Name, x => x.Details).Containing(search).ToList());
             }
             DateTime DatumVon = DateTime.ParseExact(datumVon, "MM/dd/yyyy", CultureInfo.CurrentCulture);
