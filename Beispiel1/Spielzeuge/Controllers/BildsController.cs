@@ -14,6 +14,7 @@ namespace Spielzeuge.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
+        [AllowAnonymous]
         public ActionResult Show(int id)
         {
             var imageData = db.Bilds.SingleOrDefault(c => c.BildId == id).ImageByte;

@@ -1,15 +1,15 @@
 ﻿@model IEnumerable<Spielzeuge.Models.Spielzeug>
 
 @{
-    ViewBag.Title = "Index Admin";
+    ViewBag.Title = "Adminübersicht";
 }
 
-<h2>Index Admin</h2>
+<h2>Adminübersicht</h2>
 
-<h3>@ViewBag.ErrorMsg</h3>
+<h4 style="color:red">@ViewBag.ErrorMsg</h4>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New Spielzeug", "Create")
 </p>
 <table class="table">
     <tr>

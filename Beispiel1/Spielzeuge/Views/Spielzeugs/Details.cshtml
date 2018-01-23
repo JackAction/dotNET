@@ -4,12 +4,11 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h2>Details zu @Html.DisplayFor(model => model.Name)</h2>
 
-<h3>@ViewBag.ErrorMsg</h3>
+<h4 style="color:red">@ViewBag.ErrorMsg</h4>
 
 <div>
-    <h4>Spielzeug</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -50,41 +49,47 @@
     </dl>
 </div>
 
-@using (Html.BeginForm("ReserveDetail", "Spielzeugs"))
+
+@if (Context.User.Identity.IsAuthenticated)
 {
-    @Html.AntiForgeryToken()
+    using (Html.BeginForm("ReserveDetail", "Spielzeugs"))
+    {
+        @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.SpielzeugId)
-        @Html.HiddenFor(model => model.Name)
-        @Html.HiddenFor(model => model.Preis)
-        @Html.HiddenFor(model => model.Details)
-        @Html.HiddenFor(model => model.Ausgeliehen)
-        @Html.HiddenFor(model => model.Aktiv)
+        <div class="form-horizontal">
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.SpielzeugId)
+            @Html.HiddenFor(model => model.Name)
+            @Html.HiddenFor(model => model.Preis)
+            @Html.HiddenFor(model => model.Details)
+            @Html.HiddenFor(model => model.Ausgeliehen)
+            @Html.HiddenFor(model => model.Aktiv)
 
-        <div class="form-group">
-            <label class = "control-label col-md-2">Datum Von:</label>
-            <div class="col-md-10">
-                @Html.TextBox("datumVon", "", new { @class = "date-picker" })
+            <div class="form-group">
+                <label class="control-label col-md-2">Datum Von:</label>
+                <div class="col-md-10">
+                    @Html.TextBox("datumVon", "", new { @class = "date-picker" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2">Datum Bis:</label>
+                <div class="col-md-10">
+                    @Html.TextBox("datumBis", "", new { @class = "date-picker" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Reservieren" class="btn btn-default" />
+                </div>
             </div>
         </div>
-
-        <div class="form-group">
-            <label class="control-label col-md-2">Datum Bis:</label>
-            <div class="col-md-10">
-                @Html.TextBox("datumBis", "", new { @class = "date-picker" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Reservieren" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
+    }
 }
+
+
 
 
 <p>

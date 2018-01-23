@@ -4,13 +4,9 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Spielzeugübersicht</h2>
 
-<h3>@ViewBag.ErrorMsg</h3>
-
-<p>
-    @Html.ActionLink("Admin View", "IndexAdmin")
-</p>
+<h4 style="color:red">@ViewBag.ErrorMsg</h4>
 
 @using (Html.BeginForm())
 {
@@ -86,31 +82,35 @@
         <td>
 		    @Html.ActionLink("Details", "Details", new { id = item.SpielzeugId }, new { @class = "myLink" }) 
         </td>
-        <td>
-            @using (Html.BeginForm("ReserveIndex", "Spielzeugs", FormMethod.Post, new { name = "myForm" }))
-            {
-                @Html.AntiForgeryToken()
+        @if (Context.User.Identity.IsAuthenticated)
+        {
+            <td>
+                @using (Html.BeginForm("ReserveIndex", "Spielzeugs", FormMethod.Post, new { name = "myForm" }))
+                {
+                    @Html.AntiForgeryToken()
 
-                <div class="form-horizontal">
-                    <hr />
-                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                    @Html.Hidden("SpielzeugId", item.SpielzeugId)
-                    @Html.Hidden("Name", item.Name)
-                    @Html.Hidden("Preis", item.Preis)
-                    @Html.Hidden("Details", item.Details)
-                    @Html.Hidden("Ausgeliehen", item.Ausgeliehen)
-                    @Html.Hidden("Aktiv", item.Aktiv)
+                    <div class="form-horizontal">
+                        <hr />
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        @Html.Hidden("SpielzeugId", item.SpielzeugId)
+                        @Html.Hidden("Name", item.Name)
+                        @Html.Hidden("Preis", item.Preis)
+                        @Html.Hidden("Details", item.Details)
+                        @Html.Hidden("Ausgeliehen", item.Ausgeliehen)
+                        @Html.Hidden("Aktiv", item.Aktiv)
 
 
 
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Reservieren" class="btn btn-default mySend" />
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="Reservieren" class="btn btn-default mySend" />
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-            }
-        </td>
+                }
+            </td>
+        }
+
     </tr>
 }
 
