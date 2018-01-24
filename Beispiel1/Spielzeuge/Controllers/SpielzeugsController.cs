@@ -34,6 +34,7 @@ namespace Spielzeuge.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [AllowAnonymous]
         public ActionResult Index(string datumVon, string datumBis, string search)
         {
             if (datumVon == "" || datumBis == "")

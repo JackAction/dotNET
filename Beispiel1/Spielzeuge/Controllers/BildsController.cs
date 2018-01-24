@@ -59,6 +59,10 @@ namespace Spielzeuge.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "BildId,SpielzeugId,ImageByte")] Bild bild, HttpPostedFileBase file)
         {
+            if (file == null)
+            {
+                return RedirectToAction("Edit", "Spielzeugs", new { id = bild.SpielzeugId });
+            }
             if (ModelState.IsValid)
             {
                 bild.ImageByte = new byte[file.ContentLength];
@@ -126,7 +130,7 @@ namespace Spielzeuge.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Bild bild = db.Bilds.Include(s => s.Spielzeug).SingleOrDefault(c => c.SpielzeugId == id);
+            Bild bild = db.Bilds.Include(s => s.Spielzeug).SingleOrDefault(c => c.BildId == id);
             db.Bilds.Remove(bild);
             db.SaveChanges();
             return RedirectToAction("Edit", "Spielzeugs", new { id = bild.SpielzeugId });
